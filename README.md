@@ -43,7 +43,7 @@ ai-toolkit/
 ├── LICENSE
 ├── .claude-plugin/
 │   └── marketplace.json        ← Claude Code marketplace entry
-└── plugins/                     ← Claude Code plugins
+└── claude-plugins/              ← Claude Code plugins
     └── devmonks-git/
         ├── .claude-plugin/plugin.json
         └── commands/           ← /commit, /branch, /create-pr
@@ -70,7 +70,7 @@ Rules of thumb:
 
 ### Planned additions (tool-agnostic dirs)
 
-As the toolkit grows beyond Claude Code, new vendor directories will be added alongside `plugins/`:
+As the toolkit grows beyond Claude Code, new vendor directories will be added alongside `claude-plugins/`:
 
 ```
 ├── cursor/            ← Cursor rules (.cursor/rules/*.mdc templates)

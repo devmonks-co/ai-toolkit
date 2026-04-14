@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "devmonks-git",
-      "source": "./plugins/devmonks-git",
+      "source": "./claude-plugins/devmonks-git",
       "description": "Slash commands for atomic commits, branches, and pull requests."
     }
   ]
