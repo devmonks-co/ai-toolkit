@@ -1,1 +1,0 @@
-../../plugins/devmonks-core/commands/commit.md
