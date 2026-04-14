@@ -1,0 +1,16 @@
+{
+  "name": "ai-toolkit",
+  "owner": {
+    "name": "devmonks"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "devmonks-git",
+      "source": "./devmonks-git",
+      "description": "Slash commands for atomic commits, branches, and pull requests."
+    }
+  ]
+}
