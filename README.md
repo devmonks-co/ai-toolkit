@@ -84,9 +84,23 @@ As the toolkit grows beyond Claude Code, new vendor directories will be added al
 ### Claude Code
 
 ```bash
+# one-time: register the marketplace (run once per machine)
 /plugin marketplace add devmonks-co/ai-toolkit
+
+# one-time per plugin: install what you want
 /plugin install devmonks-git@ai-toolkit
 ```
+
+Run `/plugin install` again for each additional plugin as they land (`devmonks-frontend`, `devmonks-backend`, etc.) — the marketplace only needs to be added once.
+
+#### Updating
+
+```bash
+/plugin marketplace update devmonks-co/ai-toolkit
+/reload-plugins
+```
+
+Run this when new plugin versions ship. You can also enable auto-update per marketplace in the `/plugin` UI → Marketplaces tab.
 
 Cursor, Copilot, and MCP server setup will be documented here as those directories land.
 
