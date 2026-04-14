@@ -1,0 +1,12 @@
+{
+  "name": "devmonks-git",
+  "description": "Slash commands for atomic commits, branches, and pull requests.",
+  "version": "0.1.0",
+  "author": {
+    "name": "devmonks"
+  },
+  "homepage": "https://github.com/devmonks-co/ai-toolkit",
+  "repository": "https://github.com/devmonks-co/ai-toolkit",
+  "license": "MIT",
+  "keywords": ["git", "github", "commit", "branch", "pull-request", "workflow"]
+}
