@@ -44,15 +44,31 @@ ai-toolkit/
 ├── .claude-plugin/
 │   └── marketplace.json        ← Claude Code marketplace entry
 └── plugins/                     ← Claude Code plugins
-    └── devmonks-core/
+    └── devmonks-git/
         ├── .claude-plugin/plugin.json
-        ├── commands/
-        ├── skills/
-        ├── agents/
-        └── hooks/
+        └── commands/           ← /commit, /branch, /create-pr
 ```
 
-### Planned additions
+## Plugin layout
+
+Plugins are split by **stack/persona**, not by content type. A React-only engineer installs a different set than a backend engineer, and neither pulls in tooling they will not use. Claude's context stays focused on what that person actually does.
+
+| Plugin | Scope | Ship when |
+|---|---|---|
+| `devmonks-git` | Git & GitHub workflow — universal | **shipped** |
+| `devmonks-frontend` | React / Next.js / web UI helpers | first frontend command lands |
+| `devmonks-backend` | API / DB / server helpers | first backend command lands |
+| `devmonks-mobile` | Flutter / iOS / Android helpers | first mobile command lands |
+| `devmonks-devops` | CI / Docker / deploy / infra helpers | first devops command lands |
+
+Rules of thumb:
+
+- **Do not create empty placeholder plugins.** A plugin directory exists only once it has real content.
+- **`devmonks-git` is the one universal plugin** — every engineer installs it. All other plugins are opt-in.
+- **Split by persona, not by topic purity.** Do not split `devmonks-git-commit` from `devmonks-git-branch` — they serve one workflow. But do split `devmonks-frontend` from `devmonks-backend` — those serve different workflows.
+- **Start as one plugin, split later.** When a plugin grows past ~8–10 items and clear sub-personas emerge, split it. Renaming and moving is cheap.
+
+### Planned additions (tool-agnostic dirs)
 
 As the toolkit grows beyond Claude Code, new vendor directories will be added alongside `plugins/`:
 
@@ -69,7 +85,7 @@ As the toolkit grows beyond Claude Code, new vendor directories will be added al
 
 ```bash
 /plugin marketplace add devmonks-co/ai-toolkit
-/plugin install devmonks-core@ai-toolkit
+/plugin install devmonks-git@ai-toolkit
 ```
 
 Cursor, Copilot, and MCP server setup will be documented here as those directories land.

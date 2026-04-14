@@ -1,6 +1,6 @@
-# devmonks-core commands
+# devmonks-git commands
 
-Slash commands shipped by the `devmonks-core` plugin. Each one turns a repetitive git or GitHub workflow into a propose → approve → execute loop.
+Slash commands shipped by the `devmonks-git` plugin. Each one turns a repetitive git or GitHub workflow into a propose → approve → execute loop.
 
 ## Shipped
 
