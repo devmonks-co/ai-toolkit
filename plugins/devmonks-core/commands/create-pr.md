@@ -13,7 +13,7 @@ allowed-tools: Bash(git status:*), Bash(git rev-parse:*), Bash(git rev-list:*), 
 
 ---
 
-# /pr
+# /create-pr
 
 Open a GitHub pull request from the current branch via `gh pr create`. Derive the title from the first commit on the branch; write a minimal Summary + Test plan body. Propose a plan, get one approval, execute. Never draft by default.
 
@@ -93,7 +93,7 @@ Approve, reject, or tell me what to change.
 
 ## Example
 
-Branch `feat/add-user-auth`, `/pr` (no args):
+Branch `feat/add-user-auth`, `/create-pr` (no args):
 
 ```
 Base branch? (dev, main, or type another)

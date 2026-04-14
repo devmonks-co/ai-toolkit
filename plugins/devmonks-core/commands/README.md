@@ -8,7 +8,7 @@ Slash commands shipped by the `devmonks-core` plugin. Each one turns a repetitiv
 |---|---|---|
 | [`/commit`](commit.md) | Turn the working tree into one or more atomic conventional commits | _(none)_ |
 | [`/branch`](branch.md) | Create a branch from current `HEAD` and push it with upstream tracking | `<type>/<slug>` or a short description |
-| [`/pr`](pr.md) | Open a PR from the current branch via the `gh` CLI | `[--base <branch>] [--draft] [--title <text>]` |
+| [`/create-pr`](create-pr.md) | Open a PR from the current branch via the `gh` CLI | `[--base <branch>] [--draft] [--title <text>]` |
 
 ## Shared principles
 
