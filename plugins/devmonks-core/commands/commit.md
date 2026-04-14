@@ -12,7 +12,7 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git a
 
 # /commit
 
-Turn the current working tree into one or more atomic conventional commits. Propose a plan, get one approval, execute in order. Never attribute the AI as a co-author. Takes no arguments.
+Turn the current working tree into one or more atomic conventional commits. Propose a plan, get one approval, execute in order. Never attribute the AI as a co-author.
 
 ## Workflow
 
@@ -29,16 +29,14 @@ Turn the current working tree into one or more atomic conventional commits. Prop
 
 **Subject** — `type(scope): subject`, `type: subject`, or `type(scope)!: subject` for breaking changes.
 - Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
-- Scope optional — derive it from the actual repo: the directory or module the changed files live in, matched against the scope style already used in recent `git log` entries above. Omit the scope on cross-cutting or trivial changes. Never invent filler scopes like `(repo)` or `(misc)`.
+- Scope optional — derive it from the directory or module the changed files live in, matching the style in recent `git log` entries. Omit on cross-cutting or trivial changes. Never invent filler scopes like `(repo)` or `(misc)`.
 - ≤72 chars (hard cap 100). Imperative mood. Lowercase after the colon. No trailing period. No ticket or issue refs.
 
-**Body** — always present, blank line after subject, one or two sentences (more only when genuinely needed), wrap at 72. Answers *why*, not *what*. No references to the conversation, PR, or reviewer. No AI self-attribution.
+**Body** — always present, blank line after subject, one or two sentences, wrap at 72. Answers *why*, not *what*. No references to the conversation, PR, or reviewer.
 
 **Trailers** — never emit `Co-Authored-By: Claude ...` or any AI trailer; strip it if the environment injects one. `Signed-off-by:` only if recent `git log` shows the repo already uses DCO. No others.
 
-**Breaking change** — both markers, always: `!` after the type/scope in the subject **and** a `BREAKING CHANGE:` footer in the body explaining impact and migration. Never one without the other.
-
-**Verify before every `git commit`:** subject constraints hold, body is present and why-focused, no forbidden trailers, no secrets staged, the group is one logical change, breaking markers match.
+**Breaking change** — both markers, always: `!` after the type/scope **and** a `BREAKING CHANGE:` footer explaining impact and migration. Never one without the other.
 
 ## Examples
 
