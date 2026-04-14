@@ -43,11 +43,12 @@ ai-toolkit/
 ├── LICENSE
 ├── .claude-plugin/
 │   └── marketplace.json        ← Claude Code marketplace entry
-└── claude-plugins/              ← Claude Code plugins
-    └── devmonks-git/
-        ├── .claude-plugin/plugin.json
-        └── commands/           ← /commit, /branch, /create-pr
+└── devmonks-git/                ← plugin directory (at repo root)
+    ├── .claude-plugin/plugin.json
+    └── commands/               ← /commit, /branch, /create-pr
 ```
+
+Plugin directories sit **at the repo root**, not inside a `plugins/` wrapper — Claude Code's installer currently only resolves source paths whose basename equals the plugin name, so flat layout is required in practice. This also matches the convention used by Anthropic's `knowledge-work-plugins` and `financial-services-plugins` marketplaces.
 
 ## Plugin layout
 
@@ -70,7 +71,7 @@ Rules of thumb:
 
 ### Planned additions (tool-agnostic dirs)
 
-As the toolkit grows beyond Claude Code, new vendor directories will be added alongside `claude-plugins/`:
+As the toolkit grows beyond Claude Code, new tool-specific directories will be added alongside the Claude plugin directories:
 
 ```
 ├── cursor/            ← Cursor rules (.cursor/rules/*.mdc templates)
