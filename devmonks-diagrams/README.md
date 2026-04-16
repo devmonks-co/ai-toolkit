@@ -16,17 +16,23 @@ curl -fsSL https://d2lang.com/install.sh | sh -
 
 ## Install
 
+From your terminal:
+
 ```bash
-claude plugin add devmonks-diagrams@devmonks/ai-toolkit
+claude plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+```
+
+Or from inside a Claude Code session:
+
+```
+/plugin install devmonks-diagrams@devmonks-co/ai-toolkit
 ```
 
 ## Usage
 
-Invoke directly:
-
-```
-/d2 system architecture for a chat app with WebSocket, Redis pub/sub, and PostgreSQL
-```
+| Command | Purpose | Arguments |
+|---|---|---|
+| `/d2` | Generate a D2 diagram from a natural language description | description of the diagram |
 
 Or describe what you need and Claude will invoke the skill automatically:
 
@@ -34,7 +40,7 @@ Or describe what you need and Claude will invoke the skill automatically:
 > "Diagram the authentication flow"
 > "Create a sequence diagram for the checkout process"
 
-## Supported diagram types
+### Supported diagram types
 
 - System architecture
 - ERD (Entity-Relationship)
@@ -43,7 +49,7 @@ Or describe what you need and Claude will invoke the skill automatically:
 - Class diagram
 - Grid layout
 
-## How it works
+### How it works
 
 1. Writes a `.d2` source file based on your description
 2. Validates all icon URLs via curl

@@ -21,7 +21,7 @@ A short glossary of the building blocks Claude Code exposes. Pick the right one 
 | **Hook** | Shell command the harness runs on lifecycle events (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `SessionStart`, `Stop`, …) | Event-driven, deterministic | `hooks/hooks.json` |
 | **Plugin** | A bundle of the above, distributable via marketplace | Installed once, persists | `plugins/<name>/` |
 | **MCP server** | External process exposing tools or data to Claude | Tool call at runtime | Standalone, referenced in config |
-| **Marketplace** | A repo listing installable plugins | `/plugin marketplace add owner/repo` | `.claude-plugin/marketplace.json` |
+| **Marketplace** | A repo listing installable plugins | `claude plugin marketplace add owner/repo` | `.claude-plugin/marketplace.json` |
 
 ### Rule of thumb — which one should I use?
 
@@ -43,9 +43,12 @@ ai-toolkit/
 ├── LICENSE
 ├── .claude-plugin/
 │   └── marketplace.json        ← Claude Code marketplace entry
-└── devmonks-git/                ← plugin directory (at repo root)
+├── devmonks-git/                ← plugin: git & GitHub workflow
+│   ├── .claude-plugin/plugin.json
+│   └── commands/               ← /commit, /branch, /create-pr
+└── devmonks-diagrams/           ← plugin: diagram generation with D2
     ├── .claude-plugin/plugin.json
-    └── commands/               ← /commit, /branch, /create-pr
+    └── skills/                 ← d2 diagram skill
 ```
 
 Plugin directories sit **at the repo root**, not inside a `plugins/` wrapper — Claude Code's installer currently only resolves source paths whose basename equals the plugin name, so flat layout is required in practice. This also matches the convention used by Anthropic's `knowledge-work-plugins` and `financial-services-plugins` marketplaces.
@@ -57,6 +60,7 @@ Plugins are split by **stack/persona**, not by content type. A React-only engine
 | Plugin | Scope | Ship when |
 |---|---|---|
 | `devmonks-git` | Git & GitHub workflow — universal | **shipped** |
+| `devmonks-diagrams` | Diagram generation with D2 | **shipped** |
 | `devmonks-frontend` | React / Next.js / web UI helpers | first frontend command lands |
 | `devmonks-backend` | API / DB / server helpers | first backend command lands |
 | `devmonks-mobile` | Flutter / iOS / Android helpers | first mobile command lands |
@@ -84,24 +88,42 @@ As the toolkit grows beyond Claude Code, new tool-specific directories will be a
 
 ### Claude Code
 
+From your terminal:
+
 ```bash
 # one-time: register the marketplace (run once per machine)
-/plugin marketplace add devmonks-co/ai-toolkit
+claude plugin marketplace add devmonks-co/ai-toolkit
 
 # one-time per plugin: install what you want
-/plugin install devmonks-git@ai-toolkit
+claude plugin install devmonks-git@devmonks-co/ai-toolkit
+claude plugin install devmonks-diagrams@devmonks-co/ai-toolkit
 ```
 
-Run `/plugin install` again for each additional plugin as they land (`devmonks-frontend`, `devmonks-backend`, etc.) — the marketplace only needs to be added once.
+Or from inside a Claude Code session:
+
+```
+/plugin marketplace add devmonks-co/ai-toolkit
+/plugin install devmonks-git@devmonks-co/ai-toolkit
+/plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+```
+
+Run the install command again for each additional plugin as they land (`devmonks-frontend`, `devmonks-backend`, etc.) — the marketplace only needs to be added once.
 
 #### Updating
 
+From your terminal:
+
 ```bash
-/plugin marketplace update devmonks-co/ai-toolkit
-/reload-plugins
+claude plugin marketplace update devmonks-co/ai-toolkit
 ```
 
-Run this when new plugin versions ship. You can also enable auto-update per marketplace in the `/plugin` UI → Marketplaces tab.
+Or from inside a Claude Code session:
+
+```
+/plugin marketplace update devmonks-co/ai-toolkit
+```
+
+Run this when new plugin versions ship.
 
 Cursor, Copilot, and MCP server setup will be documented here as those directories land.
 
