@@ -8,6 +8,11 @@
       "name": "devmonks-git",
       "source": "./devmonks-git",
       "description": "Slash commands for atomic commits, branches, and pull requests."
+    },
+    {
+      "name": "devmonks-diagrams",
+      "source": "./devmonks-diagrams",
+      "description": "Generate diagrams from natural language using D2."
     }
   ]
 }
