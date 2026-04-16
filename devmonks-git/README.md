@@ -7,13 +7,13 @@ Slash commands for atomic commits, branches, and pull requests.
 From your terminal:
 
 ```bash
-claude plugin install devmonks-git@devmonks-co/ai-toolkit
+claude plugin install devmonks-git@ai-toolkit
 ```
 
 Or from inside a Claude Code session:
 
 ```
-/plugin install devmonks-git@devmonks-co/ai-toolkit
+/plugin install devmonks-git@ai-toolkit
 ```
 
 ## Usage

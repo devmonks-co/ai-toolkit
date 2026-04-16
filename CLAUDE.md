@@ -84,13 +84,13 @@ One-line description.
 From your terminal:
 
 \`\`\`bash
-claude plugin install devmonks-<name>@devmonks-co/ai-toolkit
+claude plugin install devmonks-<name>@ai-toolkit
 \`\`\`
 
 Or from inside a Claude Code session:
 
 \`\`\`
-/plugin install devmonks-<name>@devmonks-co/ai-toolkit
+/plugin install devmonks-<name>@ai-toolkit
 \`\`\`
 
 ## Usage

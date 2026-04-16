@@ -19,13 +19,13 @@ curl -fsSL https://d2lang.com/install.sh | sh -
 From your terminal:
 
 ```bash
-claude plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+claude plugin install devmonks-diagrams@ai-toolkit
 ```
 
 Or from inside a Claude Code session:
 
 ```
-/plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+/plugin install devmonks-diagrams@ai-toolkit
 ```
 
 ## Usage

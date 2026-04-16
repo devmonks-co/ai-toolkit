@@ -21,7 +21,7 @@ A short glossary of the building blocks Claude Code exposes. Pick the right one 
 | **Hook** | Shell command the harness runs on lifecycle events (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `SessionStart`, `Stop`, …) | Event-driven, deterministic | `hooks/hooks.json` |
 | **Plugin** | A bundle of the above, distributable via marketplace | Installed once, persists | `plugins/<name>/` |
 | **MCP server** | External process exposing tools or data to Claude | Tool call at runtime | Standalone, referenced in config |
-| **Marketplace** | A repo listing installable plugins | `claude plugin marketplace add owner/repo` | `.claude-plugin/marketplace.json` |
+| **Marketplace** | A repo listing installable plugins | `claude plugin marketplace add <repo>` | `.claude-plugin/marketplace.json` |
 
 ### Rule of thumb — which one should I use?
 
@@ -95,16 +95,16 @@ From your terminal:
 claude plugin marketplace add devmonks-co/ai-toolkit
 
 # one-time per plugin: install what you want
-claude plugin install devmonks-git@devmonks-co/ai-toolkit
-claude plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+claude plugin install devmonks-git@ai-toolkit
+claude plugin install devmonks-diagrams@ai-toolkit
 ```
 
 Or from inside a Claude Code session:
 
 ```
 /plugin marketplace add devmonks-co/ai-toolkit
-/plugin install devmonks-git@devmonks-co/ai-toolkit
-/plugin install devmonks-diagrams@devmonks-co/ai-toolkit
+/plugin install devmonks-git@ai-toolkit
+/plugin install devmonks-diagrams@ai-toolkit
 ```
 
 Run the install command again for each additional plugin as they land (`devmonks-frontend`, `devmonks-backend`, etc.) — the marketplace only needs to be added once.
@@ -114,13 +114,13 @@ Run the install command again for each additional plugin as they land (`devmonks
 From your terminal:
 
 ```bash
-claude plugin marketplace update devmonks-co/ai-toolkit
+claude plugin marketplace update ai-toolkit
 ```
 
 Or from inside a Claude Code session:
 
 ```
-/plugin marketplace update devmonks-co/ai-toolkit
+/plugin marketplace update ai-toolkit
 ```
 
 Run this when new plugin versions ship.
