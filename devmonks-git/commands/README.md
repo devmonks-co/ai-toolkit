@@ -9,6 +9,7 @@ Slash commands shipped by the `devmonks-git` plugin. Each one turns a repetitive
 | [`/commit`](commit.md) | Turn the working tree into one or more atomic conventional commits | _(none)_ |
 | [`/branch`](branch.md) | Create a branch from current `HEAD` and push it with upstream tracking | `<type>/<slug>` or a short description |
 | [`/create-pr`](create-pr.md) | Open a PR from the current branch via the `gh` CLI | `[--base <branch>] [--draft] [--title <text>]` |
+| [`/create-issue`](create-issue.md) | Create a GitHub issue on a specified repo with a type label and description | `[--repo <owner/repo>] [--type <bug\|feat\|task\|docs>] <title or description>` |
 
 ## Shared principles
 
