@@ -14,34 +14,32 @@ allowed-tools: Bash(gh auth status:*), Bash(gh issue create:*), Bash(gh label li
 
 # /create-issue
 
-Create a focused GitHub issue. No assumptions — if information needed to fill the body is missing, ask before proposing. Propose a plan, get one approval, execute.
+Create a GitHub issue from a short description. Draft everything from what the user gives you — do not interrogate them upfront. Present the plan, let them edit inline, then execute on approval.
 
 **Arguments:** `$ARGUMENTS`
 
-- `--repo <owner/repo>` — target repo. If omitted, infer from git remote. If inference fails, ask.
-- `--type <bug|feat|task|docs>` — issue type. If omitted, infer from description or ask.
+- `--repo <owner/repo>` — target repo. If omitted, infer from git remote. If that fails, ask once.
+- `--type <bug|feat|task|docs>` — issue type. If omitted, infer from description. If ambiguous, ask once.
 - Everything else is the issue title/description.
 
 ## Workflow
 
-1. **Check auth.** If `gh auth status` reports unauthenticated, refuse: tell the user to run `gh auth login` and stop.
-2. **Parse `$ARGUMENTS`.** Extract `--repo`, `--type`, and the remaining text as the raw input.
-3. **Resolve the repo.**
+1. **Check auth.** If `gh auth status` reports unauthenticated, refuse: tell user to run `gh auth login` and stop.
+2. **Parse `$ARGUMENTS`.** Extract `--repo`, `--type`, remaining text as raw description.
+3. **Resolve repo.**
    - Use `--repo` if given.
-   - Otherwise use the `nameWithOwner` from state if present.
-   - Otherwise ask — do not proceed without a confirmed repo.
-   - Verify with `gh repo view <repo>`. If it fails, refuse with the error and stop.
-4. **Resolve the type.** Use `--type` if given. Otherwise infer per **Type inference**. If ambiguous, ask: `Issue type? bug / feat / task / docs` — do not guess.
-5. **Draft the title.** ≤72 chars, imperative, lowercase after the colon. If the raw input is already a clean title, use it verbatim. Otherwise derive one and show it for confirmation.
-6. **Check for missing info.** Before drafting the body, identify what the body template requires (see **Body templates**) and what the user has not provided. Ask for any missing required fields in a single grouped question — do not assume or invent values.
-7. **Draft the body** using the template for the resolved type (see **Body templates**). Keep every line short and factual. No filler, no padding.
-8. **Resolve the label.** Run `gh label list --repo <repo>`. Map type to label per **Label mapping**. If the label does not exist, note it in the plan — do not create it.
-9. **Present the plan** (see **Plan template**) and wait for explicit approval. Accept edits. Do not execute until approved.
-10. **Execute on approval.** Write the body to a temp file with `Write`. Run `gh issue create --repo <repo> --title <title> --body-file <tmpfile> [--label <label>]`. Delete the temp file. Report the issue URL. On failure, print `gh`'s stderr and stop.
+   - Otherwise use `nameWithOwner` from state.
+   - Otherwise ask once: `Target repo? (e.g. owner/repo)` — do not proceed without it.
+4. **Resolve type.** Use `--type` if given. Otherwise infer per **Type inference**. If genuinely ambiguous (no keywords match), ask once: `Issue type? bug / feat / task / docs`.
+5. **Draft the title.** Use the raw description verbatim if ≤72 chars. Otherwise summarise to ≤72 chars imperative.
+6. **Draft the body.** Use the template for the resolved type (see **Body templates**). Fill every field you can from the description. For fields you cannot fill, write a short italicised placeholder like `_add detail here_` — do NOT ask the user for them before presenting the plan.
+7. **Resolve label.** Run `gh label list --repo <repo>`. Map type per **Label mapping**. If label missing, note it — do not ask.
+8. **Present the plan** (see **Plan template**) and wait for approval. Accept inline edits to any field. Do not execute until approved.
+9. **Execute on approval.** Write body to temp file with `Write`. Run `gh issue create --repo <repo> --title <title> --body-file <tmpfile> [--label <label>]`. Delete temp file. Report the issue URL. On failure print `gh`'s stderr and stop.
 
 ## Type inference
 
-First match wins. If nothing matches, ask.
+First match wins. If nothing matches at all, ask once.
 
 - `crash`, `broken`, `error`, `fail`, `exception`, `not working`, `bug` → `bug`
 - `add`, `implement`, `support`, `introduce`, `build`, `new`, `feature` → `feat`
@@ -50,96 +48,86 @@ First match wins. If nothing matches, ask.
 
 ## Body templates
 
-Use exactly the template for the resolved type. Do not add extra sections. Do not fill a field with a placeholder if the value is unknown — ask the user instead.
+Keep bodies short. One sentence per field. Use `_add detail here_` as placeholder for unknowns — never leave a field blank, never ask before drafting.
 
 ### bug
 
 ```
 ## Problem
 
-<one sentence: what is broken>
+<one sentence from the description, or _add detail here_>
 
 ## Expected outcome
 
-<one sentence: what should happen instead>
+<one sentence, or _add detail here_>
 
 ## Steps to reproduce
 
-1. <step>
-2. <step>
-3. <step>
+1. <inferred from description, or _add step_>
+2. <inferred from description, or _add step_>
 
 ## Environment
 
-- Platform: <web | mobile | desktop>
-- App version: <e.g. 1.4.2>
-- OS / Browser: <e.g. iOS 17 / Chrome 124>
+- Platform: <inferred or _web / mobile / desktop_>
+- App version: <inferred or _add version_>
+- OS / Browser: <inferred or _add OS and browser_>
 ```
-
-Required fields: problem, expected outcome, at least 2 reproduce steps, platform, app version, OS/Browser. Ask for any that are missing.
 
 ### feat
 
 ```
 ## Problem / Goal
 
-<one sentence: what need or gap this addresses>
+<one sentence from the description, or _add detail here_>
 
 ## Expected outcome
 
-<one sentence: what done looks like>
+<one sentence, or _add detail here_>
 ```
-
-Required fields: problem/goal, expected outcome. Ask for any that are missing.
 
 ### task
 
 ```
 ## Brief
 
-<one sentence: what this task is>
+<one sentence from the description, or _add detail here_>
 
 ## Scope
 
-<one sentence: what is in scope; optionally one sentence on what is explicitly out>
+<one sentence, or _add detail here_>
 
 ## Deliverables
 
-- [ ] <item>
-- [ ] <item>
+- [ ] <inferred from description, or _add deliverable_>
 ```
-
-Required fields: brief, scope, at least one deliverable. Ask for any that are missing.
 
 ### docs
 
 ```
 ## Problem
 
-<one sentence: what is missing or wrong in the docs>
+<one sentence from the description, or _add detail here_>
 
 ## Expected outcome
 
-<one sentence: what the docs should cover or fix>
+<one sentence, or _add detail here_>
 ```
-
-Required fields: problem, expected outcome. Ask for any that are missing.
 
 ## Label mapping
 
-| Type   | Label name       |
-|--------|------------------|
-| `bug`  | `bug`            |
-| `feat` | `enhancement`    |
-| `task` | `task`           |
-| `docs` | `documentation`  |
+| Type   | Label name      |
+|--------|-----------------|
+| `bug`  | `bug`           |
+| `feat` | `enhancement`   |
+| `task` | `task`          |
+| `docs` | `documentation` |
 
 ## Refuse rules
 
 Never:
 
 - Execute without explicit approval
-- Assume or invent values for missing body fields — ask instead
+- Ask multiple questions before presenting the plan — draft first, ask never or once
 - Create labels that do not exist in the repo
 - Add assignees, milestones, or projects unless the user asks
 - Retry a failed `gh issue create` — print the error and stop
